@@ -29,6 +29,47 @@
           "libs/ui-components/**/*.html"
         ]
       }
+    },
+    "storybook": {
+      "executor": "@storybook/angular:start-storybook",
+      "options": {
+        "port": 4400,
+        "configDir": "libs/ui-components/.storybook",
+        "browserTarget": "ui-components:build-storybook",
+        "compodoc": false
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@storybook/angular:build-storybook",
+      "outputs": ["{options.outputDir}"],
+      "options": {
+        "outputDir": "dist/storybook/ui-components",
+        "configDir": "libs/ui-components/.storybook",
+        "browserTarget": "ui-components:build-storybook",
+        "compodoc": false
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "static-storybook": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "ui-components:build-storybook",
+        "staticFilePath": "dist/storybook/ui-components"
+      },
+      "configurations": {
+        "ci": {
+          "buildTarget": "ui-components:build-storybook:ci"
+        }
+      }
     }
   }
 }
